@@ -3,27 +3,27 @@
   import { ApplicationShell } from '@typhonjs-fvtt/runtime/svelte/component/core';
   import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
   import { getContext } from 'svelte';
-  import * as lib from "../../lib.js";
+  import * as lib from "../../lib/lib.js";
   import CreateNewVaultDialog from "../components/CreateNewVaultDialog.svelte";
-  import BankerSocket from "../../sockets.js";
+  import WorkbenchSocket from "../../sockets.js";
 
   const { application } = getContext('#external');
 
   export let elementRoot;
 
-  const { bankerActor } = application.options;
+  const { workbenchActor } = application.options;
   const playerActor = game.user.character;
 
-  const flags = bankerActor.getFlag("item-piles", 'data');
+  const flags = workbenchActor.getFlag("item-piles", 'data');
   const maxVaults = flags.maxVaults;
-  const { vaultPrice, canBuy } = lib.getCostOfVault(bankerActor, playerActor);
+  const { vaultPrice, canBuy } = lib.getCostOfVault(workbenchActor, playerActor);
   let currentVaults = getCurrentVaults();
   let selectedVault = currentVaults[0]?.id ?? "new";
 
   let hasButtonBeenPressed = false;
 
   function getCurrentVaults() {
-    return lib.getVaults({ bankerActor, userId: game.user.id }).map(vault => ({
+    return lib.getVaults({ workbenchActor, userId: game.user.id }).map(vault => ({
       id: vault.id,
       uuid: vault.uuid,
       name: vault.name
@@ -69,7 +69,7 @@
     if (!result) return;
 
     const vault = await lib.createNewVault(
-      bankerActor,
+      workbenchActor,
       result
     );
     return openVault(vault);
@@ -102,13 +102,13 @@
 
     if (!result || result === vault.name) return;
 
-    await BankerSocket.FUNCTIONS.RENAME_VAULT(vault, result);
+    await WorkbenchSocket.FUNCTIONS.RENAME_VAULT(vault, result);
 
     currentVaults = getCurrentVaults();
 
   }
 
-  const maxVaultWarning = currentVaults.length >= maxVaults ? `You have reached the maximum number of vaults (${maxVaults}) at this bank.` : "";
+  const maxVaultWarning = currentVaults.length >= maxVaults ? `You have reached the maximum number of vaults (${maxVaults}) at this workbench.` : "";
 
 </script>
 
@@ -117,7 +117,7 @@
 <ApplicationShell bind:elementRoot>
 
   <div style="text-align: center;" class="item-piles-bottom-divider">
-    <p>Welcome to <strong>{bankerActor.name}</strong>, {playerActor.name}!</p>
+    <p>Welcome to <strong>{workbenchActor.name}</strong>, {playerActor.name}!</p>
     <p>
       {#if !currentVaults.length}
         <span>

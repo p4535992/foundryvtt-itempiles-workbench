@@ -1,22 +1,24 @@
-import { SvelteApplication } from '@typhonjs-fvtt/runtime/svelte/application';
-import BankManagementShell from "./bank-management-shell.svelte";
-import * as lib from "../../lib.js";
+import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
+import WorkbenchManagementShell from "./workbench-management-shell.svelte";
+import * as lib from "../../lib/lib.js";
 
-export default class BankManagementApp extends SvelteApplication {
-
+export default class WorkbenchManagementApp extends SvelteApplication {
   constructor(options, dialogOptions) {
-    super({
-      id: `item-piles-management-${options.bankerActor?.id}-${randomID()}`,
-      title: options.bankerActor.name,
-      ...options,
-    }, dialogOptions);
+    super(
+      {
+        id: `item-piles-management-${options.workbenchActor?.id}-${randomID()}`,
+        title: options.workbenchActor.name,
+        ...options,
+      },
+      dialogOptions
+    );
   }
 
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       svelte: {
-        class: BankManagementShell,
+        class: WorkbenchManagementShell,
         target: document.body,
       },
       classes: ["app window-app sheet item-piles-workbench"],
@@ -24,7 +26,7 @@ export default class BankManagementApp extends SvelteApplication {
       width: 800,
       height: "auto",
       closeOnSubmit: false,
-      resizable: false
+      resizable: false,
     });
   }
 
@@ -33,7 +35,7 @@ export default class BankManagementApp extends SvelteApplication {
   }
 
   static async show(options = {}, dialogData = {}) {
-    const app = this.getActiveApp(options.bankerActor.id);
+    const app = this.getActiveApp(options.workbenchActor.id);
     if (app) {
       app.render(false, { focus: true });
       return;
@@ -41,7 +43,7 @@ export default class BankManagementApp extends SvelteApplication {
     return new Promise((resolve) => {
       options.resolve = resolve;
       new this(options, dialogData).render(true, { focus: true });
-    })
+    });
   }
 
   /** @override */
@@ -55,20 +57,19 @@ export default class BankManagementApp extends SvelteApplication {
           class: "item-piles-open-actor-sheet",
           icon: "fas fa-user",
           onclick: () => {
-            this.options.bankerActor.sheet.render(true, { focus: true, bypassItemPiles: true });
-          }
+            this.options.workbenchActor.sheet.render(true, { focus: true, bypassItemPiles: true });
+          },
         },
         {
           label: !lib.getItemPileSetting("hideActorHeaderText") ? "ITEM-PILES.HUD.Configure" : "",
           class: "item-piles-configure-pile",
           icon: "fas fa-box-open",
           onclick: () => {
-            game.itempiles.apps.ItemPileConfig.show(this.options.bankerActor);
-          }
+            game.itempiles.apps.ItemPileConfig.show(this.options.workbenchActor);
+          },
         },
       ].concat(buttons);
     }
-    return buttons
+    return buttons;
   }
-
 }

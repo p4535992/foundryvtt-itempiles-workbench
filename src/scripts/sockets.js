@@ -1,23 +1,22 @@
 import CONSTANTS from "./constants/constants";
 
-export default class BankerSocket {
-
+export default class WorkbenchSocket {
   static HANDLERS = {
-    RENAME_VAULT: "renameVault"
-  }
+    RENAME_VAULT: "renameVault",
+  };
 
   static BINDINGS = {
     [this.HANDLERS.RENAME_VAULT]: (vaultActorUuid, newName) => {
       const vaultActor = fromUuidSync(vaultActorUuid);
       return vaultActor.update({ name: newName });
-    }
-  }
+    },
+  };
 
   static FUNCTIONS = {
     RENAME_VAULT: (vaultActor, newName) => {
-      return BankerSocket._socket.executeAsGM(BankerSocket.HANDLERS.RENAME_VAULT, vaultActor.uuid, newName);
-    }
-  }
+      return WorkbenchSocket._socket.executeAsGM(WorkbenchSocket.HANDLERS.RENAME_VAULT, vaultActor.uuid, newName);
+    },
+  };
 
   static _socket;
 
@@ -27,5 +26,4 @@ export default class BankerSocket {
       this._socket.register(key, callback);
     }
   }
-
 }

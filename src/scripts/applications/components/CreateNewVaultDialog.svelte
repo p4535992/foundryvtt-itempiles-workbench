@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
   import { localize } from '@typhonjs-fvtt/runtime/svelte/helper';
   import { writable } from "svelte/store";
-  import * as lib from "../../lib.js";
+  import * as lib from "../../lib/lib.js";
 
   const { application } = getContext('#external');
 

@@ -3,11 +3,11 @@
   import { ApplicationShell } from '@typhonjs-fvtt/runtime/svelte/component/core';
   import { TJSDocument } from '@typhonjs-fvtt/runtime/svelte/store';
   import { getContext, onDestroy, onMount } from 'svelte';
-  import * as lib from "../../lib.js";
+  import * as lib from "../../lib/lib.js";
   import { get, writable } from "svelte/store";
   import DropZone from "../components/DropZone.svelte";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
-  import CONSTANTS from "../../constants.js";
+  import CONSTANTS from "../../constants/constants.js";
   import ProgressBar from "../components/ProgressBar.svelte";
   import { TJSProseMirror } from "@typhonjs-fvtt/svelte-standard/component/dev";
 
@@ -15,7 +15,7 @@
 
   export let elementRoot;
 
-  const { bankerActor } = application.options;
+  const { workbenchActor } = application.options;
 
   let showProgressBar = false;
   let progress = 0;
@@ -23,14 +23,14 @@
   let vaultDescription = "";
   let buttonHasBeenPressed = false;
 
-  const doc = new TJSDocument(bankerActor);
+  const doc = new TJSDocument(workbenchActor);
   $: {
     $doc;
-    const flags = game.itempiles.API.getActorFlagData(bankerActor);
+    const flags = game.itempiles.API.getActorFlagData(workbenchActor);
     vaultDescription = flags?.description !== "<p></p>" ? flags.description : "";
   }
 
-  let bankVaults = [];
+  let workbenchVaults = [];
 
   const itemsToAdd = writable([]);
   const currenciesToAdd = writable(game.itempiles.API.CURRENCIES.map(currency => {
@@ -56,9 +56,9 @@
 
     const oldData = keepOld ? get(vaults) : [];
 
-    bankVaults = lib.getVaults({ bankerActor });
+    workbenchVaults = lib.getVaults({ workbenchActor });
 
-    return bankVaults.reduce((acc, vault) => {
+    return workbenchVaults.reduce((acc, vault) => {
 
       const userId = vault.getFlag(CONSTANTS.MODULE_NAME, 'vaultUserId');
       const user = game.users.get(userId);
@@ -299,8 +299,8 @@
       </div>
     {:else}
       <div class="item-piles-bottom-divider" style="text-align: center;">
-        <p>Welcome to <strong>{bankerActor.name}</strong>, {game.user.name}! How may we help you today?</p>
-        <p>Our customers have opened a total of <strong>{bankVaults.length}</strong> vaults.</p>
+        <p>Welcome to <strong>{workbenchActor.name}</strong>, {game.user.name}! How may we help you today?</p>
+        <p>Our customers have opened a total of <strong>{workbenchVaults.length}</strong> vaults.</p>
       </div>
     {/if}
 

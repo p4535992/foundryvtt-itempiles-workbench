@@ -4,12 +4,12 @@ const CONSTANTS = {
   MODULE_NAME: "item-piles-workbench",
   FLAG: `flags.item-piles-workbench`,
 
-  GET_VAULT_DEFAULTS: (bankerActor) => {
+  GET_VAULT_DEFAULTS: (workbenchActor) => {
     const defaults = foundry.utils.duplicate(CONSTANTS.VAULT_DEFAULTS);
     defaults.vaultAccess[0].uuid = game.user.uuid;
-    const flags = bankerActor.getFlag("item-piles", "data");
-    defaults.cols = Math.max(1, flags?.bankerColumns ?? 12);
-    defaults.rows = Math.max(1, flags?.bankerRows ?? 8);
+    const flags = workbenchActor.getFlag("item-piles", "data");
+    defaults.cols = Math.max(1, flags?.workbenchColumns ?? 12);
+    defaults.rows = Math.max(1, flags?.workbenchRows ?? 8);
     return defaults;
   },
 
@@ -21,21 +21,23 @@ const CONSTANTS = {
     baseExpansionCols: 2,
     baseExpansionRows: 8,
     preventVaultAccess: true,
-    vaultAccess: [{
-      uuid: "",
-      organize: true,
-      items: {
-        withdraw: true,
-        deposit: true
+    vaultAccess: [
+      {
+        uuid: "",
+        organize: true,
+        items: {
+          withdraw: true,
+          deposit: true,
+        },
+        currencies: {
+          withdraw: true,
+          deposit: true,
+        },
       },
-      currencies: {
-        withdraw: true,
-        deposit: true
-      }
-    }],
+    ],
     logVaultActions: true,
-    vaultLogType: "user"
-  }
+    vaultLogType: "user",
+  },
 };
 
 CONSTANTS.PATH = `modules/${CONSTANTS.MODULE_ID}/`;

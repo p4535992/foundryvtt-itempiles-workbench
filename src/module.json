@@ -1,0 +1,101 @@
+{
+  "id": "item-piles-workbench",
+  "title": "Item Piles: Workbench",
+  "description": "",
+  "version": "0.0.1",
+  "authors": [
+    {
+        "name": "Wasp",
+        "url": "https://github.com/Haxxer",
+        "discord": "Wasp#2005"
+    },
+    {
+      "name": "p4535992",
+      "url": "https://github.com/p4535992",
+      "discord": "",
+      "twitter": "",
+      "patreon": "",
+      "github": "p4535992",
+      "ko-fi": "",
+      "reddit": "",
+      "email": ""
+    }
+  ],
+  "type": "module",
+  "socket": true,
+  "includes": [
+    "./assets/**",
+    "./lang/**",
+    "./languages/**",
+    "./scripts/**",
+    "./styles/**",
+    "./templates/**",
+    "./module.json",
+    "./README.md",
+    "./icons/**",
+    "./packs/**"
+  ],
+  "media": [
+    {
+      "type": "icon",
+      "location": ""
+    },
+    {
+      "type": "cover",
+      "location": ""
+    },
+    {
+      "type": "screenshot",
+      "location": ""
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
+  "packs": [],
+  "systems": [],
+  "scripts": [],
+  "esmodules": ["module.js"],
+  "styles": ["styles/style.css"],
+  "compatibility": {
+    "minimum": 11,
+    "verified": 11,
+    "maximum": 11
+  },
+  "manifestPlusVersion": "1.2.1",
+  "url": "https://github.com/p4535992/foundryvtt-item-piles-workbench",
+  "manifest": "https://github.com/p4535992/foundryvtt-item-piles-workbench/releases/download/0.0.1/module.json",
+  "download": "https://github.com/p4535992/foundryvtt-item-piles-workbench/releases/download/0.0.1/module.zip",
+  "readme": "https://github.com/p4535992/foundryvtt-item-piles-workbench/blob/master/README.md",
+  "changelog": "https://github.com/p4535992/foundryvtt-item-piles-workbench/blob/master/CHANGELOG.md",
+  "bugs": "https://github.com/p4535992/foundryvtt-item-piles-workbench/issues",
+  "allowBugReporter": true,
+  "relationships": {
+    "systems": [],
+    "requires": [
+      {
+        "id": "lib-wrapper",
+        "type": "module",
+        "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+        "compatibility": {}
+      },
+      {
+        "id": "item-piles",
+        "type": "module",
+        "compatibility": {
+          "minimum": "2.4.0",
+          "verified": "2.4.0"
+        }
+      },
+      {
+        "id": "socketlib",
+        "type": "module"
+      }
+    ],
+    "conflicts": []
+  }
+}
